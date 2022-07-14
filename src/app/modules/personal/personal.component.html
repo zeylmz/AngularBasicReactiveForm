@@ -1,1 +1,72 @@
-<p>personal works!</p>
+<h4 class="text-center mb-4">CRUD Personal</h4>
+<div class="row">
+  <div class="col-6" [formGroup]="formGroup">
+    <div class="row mb-3">
+      <div class="col-12">
+        <div class="form-floating">
+          <input type="text" class="form-control" [class.is-invalid]="isControlInvalid('name')" [class.is-valid]="isControlValid('name')" name="name" formControlName="name" placeholder="Firstname">
+          <label for="name">Firstname</label>
+        </div>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-12">
+        <div class="form-floating">
+          <input type="text" class="form-control" [class.is-invalid]="isControlInvalid('surname')" [class.is-valid]="isControlValid('surname')" name="surname" formControlName="surname" placeholder="Lastname">
+          <label for="surname">Lastname</label>
+        </div>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col-12">
+        <div class="form-floating">
+          <input type="email" class="form-control" [class.is-invalid]="isControlInvalid('email')" [class.is-valid]="isControlValid('email')" name="email" formControlName="email" placeholder="Email">
+          <label for="email">E-Mail</label>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6">
+        <button type="button" (click)="resetForm()" class="btn btn-danger w-100">Reset Form</button>
+      </div>
+      <div class="col-6">
+        <ng-container *ngIf="!editForm">
+          <button type="button" (click)="save()" class="btn btn-primary w-100">Save</button>
+        </ng-container>
+        <ng-container *ngIf="editForm">
+          <button type="button" (click)="save()" class="btn btn-success w-100">Update</button>
+        </ng-container>
+      </div>      
+    </div>
+  </div>
+  <div *ngIf="personalList$ | async as personalList" class="col-6">
+    <table class="table table-striped-columns">
+      <thead>
+        <tr>
+          <th>Firstname</th>
+          <th>Lastname</th>
+          <th>Email</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let personal of personalList; let i=index">
+          <td>{{personal.name}}</td>
+          <td>{{personal.surname}}</td>
+          <td>{{personal.email}}</td>
+          <td>
+            <div class="d-flex justify-content-end flex-shrink-0">
+              <div class="col-6"></div>
+              <a (click)="detail(personal,i)" class="btn btn-bg-transparent btn-outline-primary btn-active-color-light btn-sm me-1">
+                <i class="fa-solid fa-pen-to-square"></i>
+              </a>         
+              <a (click)="delete(personal)" class="btn btn-bg-transparent btn-outline-danger btn-active-color-light btn-sm me-1">
+                <i class="fa-solid fa-trash"></i>
+              </a>      
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
